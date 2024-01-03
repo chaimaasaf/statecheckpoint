@@ -1,25 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import "./App.css";
+class App extends Component {
+  state = {
+    person: {
+      fullName: "chaima issaoui",
+      bio: "i student developer js",
+      imgSrc: "./image.png",
+      profession: "Developer student",
+    },
+    shows: true,
+    mountTime: 0,
+  };
+  toggleShow = () => {
+    this.setState((prevState) => ({ shows: !prevState.shows }));
+  };
+  componentDidMount() {
+    this.interval = setInterval(() => {
+      this.setState((prevState) => ({ mountTime: prevState.mountTime + 1 }));
+    }, 1000);
+  }
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
+
+  render() {
+    return (
+      <div className="App">
+        <button onClick={this.toggleShow}>Toggle Profile</button>
+        {this.state.shows && <div>{}</div>}
+        <p>Time since mount: {this.state.mountTime} seconds</p>
+      </div>
+    );
+  }
 }
 
 export default App;
